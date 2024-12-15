@@ -1,148 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Store</title>
-
-    <!-- Link to Bootstrap CSS for responsiveness -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Link to Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <link rel="stylesheet" href="style.css?ver=1.0">
-    <script src="customer.js" defer></script>
-
-    <style>
-        /* Prevent logo from moving down when menu is toggled */
-        @media (max-width: 768px) {
-            .navbar {
-                display: flex;
-                justify-content: space-between; /* Ensure navbar items are spaced properly */
-                align-items: center; /* Align the items vertically */
-            }
-
-            .navbar-brand {
-                flex: 0 1 auto; /* Prevent the logo from being stretched */
-            }
-
-            .navbar-toggler {
-                margin-left: auto; /* Align the toggler button to the right */
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Header Section with Navigation Bar -->
-    <header class="bg-light p-3">
-        <div class="container">
-            <img src="logo.png" alt="Logo" id="logo" class="img-fluid" >
-                
-            <!-- Navigation Bar inside the header -->
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <!-- Logo and Store Name -->
-                <a class="navbar-brand d-flex align-items-center" href="#">
-                    <h1 class="ms-3 mb-0"><span id="store-name">NA</span> Organic Store</h1>
-                </a>                
-
-                <!-- Navbar Toggler for mobile view -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Navbar Links -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#about-us">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#help-support">Help & Support</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#much-more">Much More</a></li>
-                    </ul>
-                </div>
-            </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NA Organic Store</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta
+      name="description"
+      content="Transform your hair naturally with NA Organic Store's premium herbal products."
+    />
+    <meta
+      name="keywords"
+      content="herbal products, organic hair care, natural hair oil, organic shampoo"
+    />
+    <meta name="author" content="NA Organic Store" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1>NA Organic Store</h1>
+        <p>Transform Your Hair Naturally</p>
+        <nav>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="cta-buttons">
+          <button class="cta-button">Shop Now</button>
+          <button class="cta-button secondary">Learn More</button>
         </div>
+      </div>
     </header>
 
-    <!-- Main Product Section -->
-    <main class="container mt-4">
-        <div id="products" class="row trending-products">
-            <!-- Products will be dynamically injected here -->
+    <!-- Video Section -->
+    <section id="videos">
+      <div class="video-content">
+        <div class="video-description">
+          <h2>Watch Our Videos</h2>
+          <p>
+            Discover how our products are made and the benefits they offer for
+            your hair.
+          </p>
         </div>
+        <div class="video-container">
+          <div class="video-wrapper">
+            <video id="video1" autoplay loop muted>
+              <source src="assets/making.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="video-wrapper">
+            <video id="video2" autoplay loop muted>
+              <source src="assets/product.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section id="home" class="active">
+        <div class="hero-overlay">
+          <div class="hero-content">
+            <h2>Welcome to NA Organic Store</h2>
+            <p>Your Destination for Natural Hair Care</p>
+            <p>
+              Discover the power of organic ingredients that nurture your hair
+              and bring out its natural beauty.
+            </p>
+            <div class="cta-buttons">
+              <button class="cta-button">Shop Now</button>
+              <button class="cta-button secondary">Learn More</button>
+            </div>
+          </div>
+        </div>
+        <!-- Product Preview Container -->
+        <div class="product-preview-container">
+            <h3>Our Featured Products</h3>
+            <div class="product-previews" id="product-preview-list">
+              <!-- Dynamically populated products go here -->
+            </div>
+          </div>
+      </section>
+          
+          <!-- Products Section -->
+          <section id="products">
+            <h2>Our Products</h2>
+            <div id="product-list">
+              <!-- Dynamically populated products go here -->
+            </div>
+          </section>
+
+      <section id="about">
+        <div class="about-container">
+          <div class="about-image">
+            <img src="assets/about-us.png" alt="About Us Image" />
+          </div>
+          <div class="about-content">
+            <h2>About Us</h2>
+            <p>
+              At NA Organic Store, we believe in the power of nature. Our
+              mission is to provide high-quality, organic hair care products
+              that are effective and sustainable.
+            </p>
+            <p>
+              Founded on the principles of quality and care, we aim to transform
+              hair care by harnessing the benefits of herbal ingredients. Join
+              us on this journey to healthier, happier hair.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Have questions or feedback? We'd love to hear from you!</p>
+        <form id="contact-form">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your Email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              placeholder="Your Message"
+              required
+            ></textarea>
+          </div>
+          <button type="submit">Send Message</button>
+        </form>
+        <div class="contact-links">
+          <p>Follow us:</p>
+          <a href="https://facebook.com" target="_blank">Facebook</a> |
+          <a href="https://instagram.com" target="_blank">Instagram</a> |
+          <a href="https://twitter.com" target="_blank">Twitter</a>
+        </div>
+      </section>
     </main>
 
-    <!-- Cart Summary (hidden by default) -->
-    <div id="cart-summary" class="cart-summary hidden fixed-bottom bg-white shadow-lg p-4 w-100">
-        <h2>Order Summary</h2>
-        <div id="order-details"></div>
-        <button id="confirm-order" class="btn btn-primary">Confirm Order</button>
-    </div>
-
-    <!-- Overlay (for cart/modal background) -->
-    <div id="overlay" class="hidden position-fixed top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
-
-    <!-- Confirmation Pop-up -->
-    <div id="confirmation-popup" class="confirmation-popup hidden position-fixed top-50 start-50 translate-middle bg-light p-4 shadow-lg">
-        <h3>Order Confirmation</h3>
-        <p id="order-summary"></p>
-        <button id="confirm-popup" class="btn btn-success">OK</button>
-    </div>
-
-    <!-- Customer Details Form (hidden by default) -->
-    <div id="customer-form" class="customer-form hidden position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg w-75 w-md-50">
-        <h3>Enter your details</h3>
-        <form id="details-form">
-            <div class="mb-3">
-                <label for="first-name" class="form-label">First Name:</label>
-                <input type="text" id="first-name" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="last-name" class="form-label">Last Name:</label>
-                <input type="text" id="last-name" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" id="email" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="phone" class="form-label">Phone:</label>
-                <input type="tel" id="phone" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="address" class="form-label">Address:</label>
-                <textarea id="address" class="form-control" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-
-    <!-- Footer Section with Social Media Links and WhatsApp Button -->
-    <footer class="bg-dark text-white p-4 w-100">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <h5>Follow Us</h5>
-                <a href="https://www.facebook.com" target="_blank" class="text-white me-3">
-                    <i class="fab fa-facebook"></i> Facebook
-                </a>
-                <a href="https://www.instagram.com" target="_blank" class="text-white me-3">
-                    <i class="fab fa-instagram"></i> Instagram
-                </a>
-                <a href="https://www.tiktok.com" target="_blank" class="text-white me-3">
-                    <i class="fab fa-tiktok"></i> TikTok
-                </a>
-            </div>
-            <div>
-                <h5>Contact Us</h5>
-                <a href="https://wa.me/1234567890" target="_blank" class="btn btn-success">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </a>
-            </div>
-        </div>
+    <footer>
+      <p>&copy; 2024 NA Organic Store. All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap JS (for modals, responsive features) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="customer.js" defer></script>
+  </body>
 </html>

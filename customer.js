@@ -3,83 +3,95 @@ document.addEventListener('DOMContentLoaded', () => {
     let cart = [];
 
     // Fetch products from the server
-    fetch('get_products.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const products = data.products;
+  // Fetch products from the server
+  fetch('get_products.php')
+  .then(response => response.json())
+  .then(data => {
+    const productPreviewContainer = document.querySelector('#product-preview-list');  // For Featured Products
+    const productsContainer = document.querySelector('#product-list');  // For Our Products
 
-                if (products.length === 0) {
-                    productsContainer.innerHTML = '<p>No products available</p>';
-                    return;
-                }
+    if (data.success) {
+      const products = data.products;
 
-                // Generate product cards dynamically
-                products.forEach(product => {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
+      if (products.length === 0) {
+        productPreviewContainer.innerHTML = '<p>No products available</p>';
+        productsContainer.innerHTML = '<p>No products available</p>';
+        return;
+      }
 
-                    productCard.innerHTML = `
-                        <div class="product-slider">
-                            <div class="slider-wrapper">
-                                <img src="${product.images[0]}" alt="${product.name}" class="slider-image">
-                                <button class="prev">&#10094;</button>
-                                <button class="next">&#10095;</button>
-                            </div>
-                        </div>
-                        <h3 class="product-name">${product.name}</h3>
-                        <p class="product-description">${product.description}</p>
-                        <p class="product-price">Rs ${product.price}</p>
-                        <button class="buy-now" data-id="${product.id}" data-price="${product.price}">Add to Cart</button>
-                    `;
+      // Generate product cards dynamically for both sections
+      products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
 
-                    productsContainer.appendChild(productCard);
+        productCard.innerHTML = `
+          <div class="product-slider">
+            <div class="slider-wrapper">
+              <img src="${product.images[0]}" alt="${product.name}" class="slider-image">
+              <button class="prev">&#10094;</button>
+              <button class="next">&#10095;</button>
+            </div>
+          </div>
+          <h3 class="product-name">${product.name}</h3>
+          <p class="product-description">${product.description}</p>
+          <p class="product-price">Rs ${product.price}</p>
+          <button class="buy-now" data-id="${product.id}" data-price="${product.price}">Add to Cart</button>
+        `;
 
-                    // Add slider functionality
-                    const slider = productCard.querySelector('.product-slider');
-                    let currentIndex = 0;
-                    const images = product.images;
-                    const sliderWrapper = slider.querySelector('.slider-wrapper');
-                    const totalImages = images.length;
+        // Append the product card to both containers
+        const clonedProductCard = productCard.cloneNode(true);
+        productPreviewContainer.appendChild(clonedProductCard);  // For the Featured Products section
+        productsContainer.appendChild(productCard);  // For the Our Products section
 
-                    function updateSlider() {
-                        if (totalImages > 0) {
-                            if (currentIndex >= totalImages) currentIndex = 0;
-                            if (currentIndex < 0) currentIndex = totalImages - 1;
-                            sliderWrapper.querySelector('img').src = images[currentIndex];
-                        }
-                    }
+        // Add slider functionality
+        const slider = productCard.querySelector('.product-slider');
+        let currentIndex = 0;
+        const images = product.images;
+        const sliderWrapper = slider.querySelector('.slider-wrapper');
+        const totalImages = images.length;
 
-                    slider.querySelector('.next').addEventListener('click', () => {
-                        currentIndex++;
-                        updateSlider();
-                    });
+        function updateSlider() {
+          if (totalImages > 0) {
+            if (currentIndex >= totalImages) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = totalImages - 1;
+            sliderWrapper.querySelector('img').src = images[currentIndex];
+          }
+        }
 
-                    slider.querySelector('.prev').addEventListener('click', () => {
-                        currentIndex--;
-                        updateSlider();
-                    });
-
-                    updateSlider();
-                });
-
-                // Add event listener to "Add to Cart" buttons
-                const buyButtons = document.querySelectorAll('.buy-now');
-                buyButtons.forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const productId = e.target.dataset.id;
-                        const productPrice = parseFloat(e.target.dataset.price);
-                        addToCart(productId, productPrice);
-                    });
-                });
-            } else {
-                productsContainer.innerHTML = `<p>${data.message}</p>`;
-            }
-        })
-        .catch(err => {
-            console.error('Error fetching products:', err);
-            productsContainer.innerHTML = '<p>Error loading products</p>';
+        slider.querySelector('.next').addEventListener('click', () => {
+          currentIndex++;
+          updateSlider();
         });
+
+        slider.querySelector('.prev').addEventListener('click', () => {
+          currentIndex--;
+          updateSlider();
+        });
+
+        updateSlider();
+      });
+
+      // Add event listener to "Add to Cart" buttons
+      const buyButtons = document.querySelectorAll('.buy-now');
+      buyButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          const productId = e.target.dataset.id;
+          const productPrice = parseFloat(e.target.dataset.price);
+          addToCart(productId, productPrice);
+        });
+      });
+    } else {
+      productPreviewContainer.innerHTML = `<p>${data.message}</p>`;
+      productsContainer.innerHTML = `<p>${data.message}</p>`;
+    }
+  })
+  .catch(err => {
+    console.error('Error fetching products:', err);
+    productPreviewContainer.innerHTML = '<p>Error loading products</p>';
+    productsContainer.innerHTML = '<p>Error loading products</p>';
+  });
+
+
 
     function addToCart(productId, productPrice) {
         const productIndex = cart.findIndex(item => item.id === productId);
