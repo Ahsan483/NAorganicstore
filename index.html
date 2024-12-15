@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Store</title>
+
+    <!-- Link to Bootstrap CSS for responsiveness -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css?ver=1.0">
+    <script src="customer.js" defer></script>
+
+    <style>
+        /* Prevent logo from moving down when menu is toggled */
+        @media (max-width: 768px) {
+            .navbar {
+                display: flex;
+                justify-content: space-between; /* Ensure navbar items are spaced properly */
+                align-items: center; /* Align the items vertically */
+            }
+
+            .navbar-brand {
+                flex: 0 1 auto; /* Prevent the logo from being stretched */
+            }
+
+            .navbar-toggler {
+                margin-left: auto; /* Align the toggler button to the right */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section with Navigation Bar -->
+    <header class="bg-light p-3">
+        <div class="container">
+            <img src="logo.png" alt="Logo" id="logo" class="img-fluid" >
+                
+            <!-- Navigation Bar inside the header -->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <!-- Logo and Store Name -->
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <h1 class="ms-3 mb-0"><span id="store-name">NA</span> Organic Store</h1>
+                </a>                
+
+                <!-- Navbar Toggler for mobile view -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar Links -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#about-us">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#help-support">Help & Support</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#much-more">Much More</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Product Section -->
+    <main class="container mt-4">
+        <div id="products" class="row trending-products">
+            <!-- Products will be dynamically injected here -->
+        </div>
+    </main>
+
+    <!-- Cart Summary (hidden by default) -->
+    <div id="cart-summary" class="cart-summary hidden fixed-bottom bg-white shadow-lg p-4 w-100">
+        <h2>Order Summary</h2>
+        <div id="order-details"></div>
+        <button id="confirm-order" class="btn btn-primary">Confirm Order</button>
+    </div>
+
+    <!-- Overlay (for cart/modal background) -->
+    <div id="overlay" class="hidden position-fixed top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+
+    <!-- Confirmation Pop-up -->
+    <div id="confirmation-popup" class="confirmation-popup hidden position-fixed top-50 start-50 translate-middle bg-light p-4 shadow-lg">
+        <h3>Order Confirmation</h3>
+        <p id="order-summary"></p>
+        <button id="confirm-popup" class="btn btn-success">OK</button>
+    </div>
+
+    <!-- Customer Details Form (hidden by default) -->
+    <div id="customer-form" class="customer-form hidden position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg w-75 w-md-50">
+        <h3>Enter your details</h3>
+        <form id="details-form">
+            <div class="mb-3">
+                <label for="first-name" class="form-label">First Name:</label>
+                <input type="text" id="first-name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="last-name" class="form-label">Last Name:</label>
+                <input type="text" id="last-name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone:</label>
+                <input type="tel" id="phone" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label>
+                <textarea id="address" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Footer Section with Social Media Links and WhatsApp Button -->
+    <footer class="bg-dark text-white p-4 w-100">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <h5>Follow Us</h5>
+                <a href="https://www.facebook.com" target="_blank" class="text-white me-3">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="text-white me-3">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://www.tiktok.com" target="_blank" class="text-white me-3">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+            </div>
+            <div>
+                <h5>Contact Us</h5>
+                <a href="https://wa.me/1234567890" target="_blank" class="btn btn-success">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (for modals, responsive features) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

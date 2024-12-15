@@ -1,0 +1,36 @@
+/* Button Hover Ripple */
+button {
+    position: relative;
+    overflow: hidden;
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transition: width 0.5s ease, height 0.5s ease;
+}
+
+button:hover::after {
+    width: 200%;
+    height: 200%;
+}
+
+/* Input Focus Shake */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
+
+input:invalid {
+    animation: shake 0.5s ease-in-out;
+}
