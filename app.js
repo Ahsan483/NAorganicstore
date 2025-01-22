@@ -368,6 +368,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalAmount = document.getElementById('grandTotal').textContent;
     const orderId = `ORDER-${Math.floor(Math.random() * 100000)}`;
   
+    if (!validateContactNumber(customerContact)) {
+      showToast('error', 'Invalid contact number! It should be in the format: 0xxxxxxxx71.');
+      return;
+    }
+
     if (cart.length === 0) {
       showToast('error', 'Your cart is empty! Please add products before proceeding.');
       return;
