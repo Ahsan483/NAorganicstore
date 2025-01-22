@@ -1,10 +1,8 @@
-// 📌 Sticky Navbar on Scroll
 window.addEventListener('scroll', () => {
   const navbar = document.querySelector('.navbar');
   navbar.classList.toggle('sticky', window.scrollY > 50);
 });
 
-// 📌 Document Ready
 document.addEventListener('DOMContentLoaded', () => {
   const cartCount = document.getElementById('cart-count');
   const cartModal = new bootstrap.Modal(document.getElementById('cartDetailsModal'));
@@ -18,17 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('main section');
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // 📌 Show Specific Section
   function showSection(sectionId) {
     sections.forEach(section => {
-      // Always keep the video section visible
       if (section.id === 'video') {
         section.style.display = 'block';
         section.classList.add('active');
         return;
       }
 
-      // Hide all other sections
       section.style.display = 'none';
       section.classList.remove('active');
     });
@@ -41,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
       targetSection.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Hide Featured Products when Products section is active
     const featuredProductsSection = document.querySelector('#featured-products');
     if (sectionId === '#products') {
       featuredProductsSection.style.display = 'none';
@@ -52,11 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /**
- * 📲 Open WhatsApp Chat with a Pre-Filled Message
- * @param {string} phoneNumber - The WhatsApp number (with country code, no + sign)
- * @param {string} message - Pre-filled message for the chat
- */
   function openWhatsAppChat(phoneNumber, message) {
     console.log("message is..",message);
     
@@ -65,8 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.open(whatsappLink, '_blank');
   }
 
-
-  // 📌 Navbar Link Click Handler
   navbarLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -86,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Toast Notification Function
   function showToast(type, message) {
     const toastEl = type === 'success' ? document.getElementById('successToast') : document.getElementById('errorToast');
     const toastMessageEl = type === 'success' ? document.getElementById('successToastMessage') : document.getElementById('errorToastMessage');
@@ -97,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
     toast.show();
   }
 
-  // 📌 Update Cart UI with Quantity Controls and Remove Button
   function updateCartUI() {
     cartItemsTable.innerHTML = '';
     let total = 0;
@@ -129,12 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     toggleBuyButton();
     addQuantityEventListeners();
-    addRemoveEventListeners(); // Ensure remove event listeners are re-attached
+    addRemoveEventListeners();
   }
 
-  // 📌 Add Event Listeners for Quantity Controls
   function addQuantityEventListeners() {
-    // Increase Quantity
     document.querySelectorAll('.increase-qty').forEach(button => {
       button.addEventListener('click', (e) => {
         const index = e.target.dataset.index;
@@ -144,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Decrease Quantity
     document.querySelectorAll('.decrease-qty').forEach(button => {
       button.addEventListener('click', (e) => {
         const index = e.target.dataset.index;
@@ -158,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Manual Quantity Update
     document.querySelectorAll('.cart-qty-input').forEach(input => {
       input.addEventListener('change', (e) => {
         const index = e.target.dataset.index;
@@ -178,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   toggleBuyButton();
-  // 📌 Add to Cart Function
   function addToCart(product) {
     const existingProduct = cart.find(item => item.name === product.name);
     if (existingProduct) {
@@ -192,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // 📌 Add Remove Button Event Listeners
   function addRemoveEventListeners() {
     document.querySelectorAll('.remove-item').forEach(button => {
       button.addEventListener('click', (e) => {
@@ -201,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-  // 📌 Remove from Cart
   function removeFromCart(index) {
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -209,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('success', 'Product removed from cart successfully!');
   }
 
-  // 📌 Add to Cart from Buttons
   document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
@@ -222,7 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 📌 Add to Cart from Modal
   addToCartButtonModal.addEventListener('click', () => {
     const title = document.getElementById('productModalTitle').textContent;
     const price = parseFloat(document.getElementById('productModalPrice').textContent);
@@ -230,14 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
     productModal.hide();
   });
 
-  // 📌 Attach WhatsApp Button Listeners
   document.querySelectorAll('.whatsapp-button').forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
 
       const productName = button.dataset.productName || 'General Inquiry';
       const price = button.dataset.productPrice || '';
-      const phoneNumber = '923420565171'; // Replace with your WhatsApp Business number
+      const phoneNumber = '+923291945009'; 
 
       let message = `Hello! I'm interested in *${productName}*`;
       if (price) {
@@ -249,7 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // 📌 Open Product Details Modal when Clicking on Card
   document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', (e) => {
       if (e.target.closest('.add-to-cart') || e.target.closest('.whatsapp-button')) {
@@ -272,35 +246,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 📌 Smooth Scrolling and Section Visibility
   document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
 
-      const targetId = link.getAttribute('href'); // Get the section ID
-      const targetSection = document.querySelector(targetId); // Select the target section
+      const targetId = link.getAttribute('href');
+      const targetSection = document.querySelector(targetId);
 
       if (targetSection) {
-        // Hide all sections
         document.querySelectorAll('main section').forEach(section => {
           section.classList.remove('active');
         });
 
-        // Show target section
         targetSection.classList.add('active');
 
-        // Smooth scroll to the target section considering navbar height
         const navbarHeight = document.querySelector('.navbar').offsetHeight;
         window.scrollTo({
           top: targetSection.offsetTop - navbarHeight - 20,
           behavior: 'smooth'
         });
 
-        // Update active link styling
         document.querySelectorAll('.navbar-nav .nav-link').forEach(nav => nav.classList.remove('active'));
         link.classList.add('active');
 
-        // Collapse mobile navbar if open
         const navbarCollapse = document.querySelector('.navbar-collapse');
         if (navbarCollapse.classList.contains('show')) {
           const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
@@ -311,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // 📌 Navbar Cart Link Logic
   document.querySelector('.navbar-nav .nav-link[href="#cart"]').addEventListener('click', (e) => {
     e.preventDefault();
     cartModal.show();
@@ -322,25 +289,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 📌 Validate Contact Number
   function validateContactNumber(contactNumber) {
-    const contactPattern = /^[0-9]{10,15}$/; // Only digits, 10-15 characters
+    const contactPattern = /^[0-9]{10,15}$/; 
     return contactPattern.test(contactNumber);
   }
 
-  // 📌 Smooth Scroll to Contact Section from "Get in Touch" Button
   document.querySelector('.btn[href="#contact"]').addEventListener('click', (e) => {
     e.preventDefault();
 
     const targetSection = document.querySelector('#contact');
     if (targetSection) {
-      // Ensure other sections are hidden
       document.querySelectorAll('main section').forEach(section => {
         section.classList.remove('active');
         section.style.display = 'none';
       });
 
-      // Show and scroll to the Contact section
       targetSection.classList.add('active');
       targetSection.style.display = 'block';
 
@@ -352,7 +315,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 📌 Smooth Scroll to Featured Products from "Shop Now" Button
   document.querySelectorAll('a[href="#featured-products"]').forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
@@ -377,19 +339,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // 📌 Smooth Scroll to About Section from "Learn More" Button
   document.querySelector('.btn[href="#about"]').addEventListener('click', (e) => {
     e.preventDefault();
 
     const targetSection = document.querySelector('#about');
     if (targetSection) {
-      // Hide all sections
       document.querySelectorAll('main section').forEach(section => {
         section.classList.remove('active');
         section.style.display = 'none';
       });
 
-      // Show and scroll to the About section
       targetSection.classList.add('active');
       targetSection.style.display = 'block';
 
@@ -417,11 +376,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartDetails = cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join(', ');
   
     try {
-      const response = await fetch('/api/whatsapp/send-whatsapp-message', {
+      const response = await fetch('https://r2v8ixgsmi.execute-api.ap-south-1.amazonaws.com/api/whatsapp/send-whatsapp-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          to: '+923420565171', // Replace with your test number
+          to: '+923291945009',
           orderId: orderId,
           customerName: customerName,
           customerContact: customerContact,
@@ -437,6 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('success', 'Order details sent to WhatsApp!');
         clearCartAndForm();
       } else {
+        console.log('Error:', result.error );
         throw new Error(result.error || 'Failed to send order details');
       }
     } catch (error) {
@@ -446,19 +406,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
 
-  // 📌 Smooth Scroll to Home Section on Logo Click
   document.querySelector('.navbar-brand').addEventListener('click', (e) => {
     e.preventDefault();
 
     const targetSection = document.querySelector('#home');
     if (targetSection) {
-      // Hide all sections
       document.querySelectorAll('main section').forEach(section => {
         section.classList.remove('active');
         section.style.display = 'none';
       });
 
-      // Show and scroll to the Home section
       targetSection.classList.add('active');
       targetSection.style.display = 'block';
 
@@ -468,49 +425,39 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Collapse mobile navbar if open
     const navbarCollapse = document.querySelector('.navbar-collapse');
     if (navbarCollapse.classList.contains('show')) {
       const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
       bsCollapse.hide();
     }
 
-    // Update Active Link in Navbar
     document.querySelectorAll('.navbar-nav .nav-link').forEach(nav => nav.classList.remove('active'));
     document.querySelector('.navbar-nav .nav-link[href="#home"]').classList.add('active');
   });
 
 
-  // 📌 Clear Cart and Order Form After Successful Purchase
   function clearCartAndForm() {
-    // Clear Cart
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartUI();
 
-    // Clear Form Fields
     document.getElementById('customerName').value = '';
     document.getElementById('customerContact').value = '';
     document.getElementById('customerLocation').value = '';
 
-    // Disable Buy Button
     toggleBuyButton();
 
-    // Close Cart Modal
     const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartDetailsModal'));
     cartModal.hide();
   }
 
-  // 📌 Disable Buy Button if Cart is Empty
   function toggleBuyButton() {
     const proceedToBuy = document.getElementById('proceedToBuy');
     proceedToBuy.disabled = cart.length === 0;
   }
 
-  // 📌 Initialize Cart UI
   updateCartUI();
 
-  // 📌 Default Section on Page Load
   const defaultSection = window.location.hash || '#home';
   showSection(defaultSection);
   document.querySelectorAll('main section').forEach(section => {
