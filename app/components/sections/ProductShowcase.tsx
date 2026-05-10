@@ -18,14 +18,14 @@ export default function ProductShowcase() {
 
         {/* Showcase Image */}
         <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-200/50 animate-fade-in-up">
-          <div className="bg-gray-100 aspect-video sm:aspect-auto relative">
+          <div className="bg-gray-100 relative w-full" style={{ aspectRatio: '16/9' }}>
             <Image
               src="/images/products/all-products.png"
               alt="NA Organic Store - Complete Product Collection"
               fill
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 85vw"
-              className="object-cover hover:scale-105 transition duration-500 cursor-pointer"
+              className="object-contain hover:scale-105 transition duration-500 cursor-pointer"
               quality={85}
             />
           </div>
