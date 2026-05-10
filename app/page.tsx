@@ -6,6 +6,7 @@ import Navbar from '@/app/components/shared/Navbar';
 import Footer from '@/app/components/shared/Footer';
 import CartModal from '@/app/components/shared/CartModal';
 import Hero from '@/app/components/sections/Hero';
+import ProductShowcase from '@/app/components/sections/ProductShowcase';
 import Videos from '@/app/components/sections/Videos';
 import Products from '@/app/components/sections/Products';
 import About from '@/app/components/sections/About';
@@ -128,6 +129,7 @@ Please confirm receipt of my order. Thank you!
 
       <main className="flex-1">
         <Hero onShopClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })} />
+        <ProductShowcase />
         <Videos />
         <Products
           products={products}
