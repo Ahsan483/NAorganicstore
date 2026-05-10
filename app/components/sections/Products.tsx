@@ -1,12 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import ProductCard from '@/app/components/shared/ProductCard';
+import ProductLightbox from '@/app/components/shared/ProductLightbox';
 
 interface Product {
   id: string;
   title: string;
   description: string;
   image: string;
+  images?: string[];
   price: number;
   originalPrice: number;
   isComingSoon?: boolean;
@@ -23,6 +26,15 @@ export default function Products({
   onAddToCart,
   onWhatsApp,
 }: ProductsProps) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [selectedProductIndex, setSelectedProductIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const handleImageClick = (productIndex: number, imageIndex: number) => {
+    setSelectedProductIndex(productIndex);
+    setSelectedImageIndex(imageIndex);
+    setLightboxOpen(true);
+  };
   const activeProducts = products.filter((p) => !p.isComingSoon);
   const comingSoonProducts = products.filter((p) => p.isComingSoon);
 
@@ -61,6 +73,7 @@ export default function Products({
                     {...product}
                     onAddToCart={onAddToCart}
                     onWhatsApp={onWhatsApp}
+                    onImageClick={(imageIndex) => handleImageClick(idx, imageIndex)}
                   />
                 </div>
               ))}
@@ -91,6 +104,17 @@ export default function Products({
               ))}
             </div>
           </div>
+        )}
+
+        {/* Lightbox */}
+        {activeProducts.length > 0 && (
+          <ProductLightbox
+            isOpen={lightboxOpen}
+            images={activeProducts[selectedProductIndex]?.images || [activeProducts[selectedProductIndex]?.image]}
+            currentIndex={selectedImageIndex}
+            productName={activeProducts[selectedProductIndex]?.title || 'Product'}
+            onClose={() => setLightboxOpen(false)}
+          />
         )}
       </div>
     </section>

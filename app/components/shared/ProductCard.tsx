@@ -12,8 +12,10 @@ interface ProductCardProps {
   price: number;
   originalPrice: number;
   isComingSoon?: boolean;
+  images?: string[];
   onAddToCart?: (product: { id: string; name: string; price: number }) => void;
   onWhatsApp?: (product: { name: string; price: number }) => void;
+  onImageClick?: (imageIndex: number) => void;
 }
 
 export default function ProductCard({
@@ -24,8 +26,10 @@ export default function ProductCard({
   price,
   originalPrice,
   isComingSoon = false,
+  images = [],
   onAddToCart,
   onWhatsApp,
+  onImageClick,
 }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const discount = Math.round(((originalPrice - price) / originalPrice) * 100);
@@ -58,7 +62,10 @@ export default function ProductCard({
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col border border-gray-200/50 hover:-translate-y-3 animate-scale-in group">
       {/* Image Container */}
-      <div className="relative w-full h-64 bg-gray-100 overflow-hidden">
+      <div
+        className="relative w-full h-64 bg-gray-100 overflow-hidden cursor-pointer"
+        onClick={() => onImageClick?.(0)}
+      >
         <img
           src={image}
           alt={title}
