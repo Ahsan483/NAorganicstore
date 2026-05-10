@@ -13,21 +13,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'NA Organic Store - Premium Organic Hair Care Products',
-  description: 'Transform your hair naturally with our 100% organic, chemical-free hair care products. Premium shampoos, oils, and serums crafted for all hair types.',
-  keywords: 'organic hair care, natural shampoo, herbal products, cruelty-free, chemical-free',
+  title: 'NA Organic Store | 100% Natural Beauty & Wellness Products',
+  description: 'Discover NA Organic Store - your trusted source for 100% organic, chemical-free beauty and wellness products. Premium herbal shampoos, oils, creams, and serums for natural health.',
+  keywords: 'organic products, natural beauty, herbal remedies, organic hair care, cruelty-free, chemical-free, natural wellness',
   authors: [{ name: 'NA Organic Store', url: 'https://naorganicstore.com' }],
   metadataBase: new URL('https://naorganicstore.com'),
+  icons: {
+    icon: '/images/na-store-logo.png',
+    apple: '/images/na-store-logo.png',
+  },
   openGraph: {
-    title: 'NA Organic Store - Premium Organic Hair Care',
-    description: 'Transform your hair naturally with our 100% organic products',
+    title: 'NA Organic Store | 100% Natural Beauty & Wellness',
+    description: 'Premium 100% organic, herbal beauty and wellness products. Transform your health naturally.',
     type: 'website',
     locale: 'en_US',
+    images: [
+      {
+        url: '/images/na-store-logo.png',
+        width: 512,
+        height: 512,
+        alt: 'NA Organic Store Logo',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NA Organic Store',
-    description: 'Premium organic hair care products',
+    title: 'NA Organic Store | 100% Natural Products',
+    description: 'Premium organic beauty and wellness products',
+    images: ['/images/na-store-logo.png'],
   },
 };
 
