@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sendContactEmail } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,17 +31,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Integrate with your backend
-    // - Send email notification
-    // - Save to database
-    // - Add spam protection (reCAPTCHA, rate limiting)
-
-    console.log('New Contact Message:', {
-      name,
-      email,
-      message,
-      timestamp: new Date().toISOString(),
-    });
+    // Send email
+    await sendContactEmail({ name, email, message });
 
     return NextResponse.json(
       {
@@ -52,7 +44,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Contact API error:', error);
     return NextResponse.json(
-      { error: 'Failed to send message' },
+      { error: 'Failed to send message. Please try again later.' },
       { status: 500 }
     );
   }

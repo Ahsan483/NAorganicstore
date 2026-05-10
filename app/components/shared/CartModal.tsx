@@ -28,6 +28,7 @@ export default function CartModal({
   onCheckout,
 }: CartModalProps) {
   const [customerName, setCustomerName] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerLocation, setCustomerLocation] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,6 +44,7 @@ export default function CartModal({
     try {
       await onCheckout({
         name: customerName,
+        email: customerEmail,
         phone: customerPhone,
         location: customerLocation,
       });
@@ -139,6 +141,13 @@ export default function CartModal({
                   placeholder="Your Name"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address (for order confirmation)"
+                  value={customerEmail}
+                  onChange={(e) => setCustomerEmail(e.target.value)}
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
                 />
                 <input

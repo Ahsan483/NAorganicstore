@@ -73,14 +73,38 @@ export default function Home() {
 
   const handleCheckout = async (customerInfo: any) => {
     try {
+      const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+      // Send order to API (which will send confirmation email)
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerInfo,
+          items: cartItems,
+          total,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(`Error: ${data.error}`);
+        return;
+      }
+
+      // Show success message
+      alert(`✅ Order placed successfully! Order ID: ${data.orderId}\nConfirmation email has been sent. Our team will contact you shortly.`);
+
+      // Open WhatsApp with order confirmation message
       const message = `
-Order from NA Organic Store
-Order ID: ORD-${Date.now()}
+Hi! I just placed an order ${data.orderId} on NA Organic Store.
+
 Customer: ${customerInfo.name}
-Phone: ${customerInfo.phone}
-Location: ${customerInfo.location}
 Items: ${cartItems.map((item) => `${item.name} (x${item.quantity})`).join(', ')}
-Total: Rs. ${cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)}
+Total: Rs. ${total}
+
+Please confirm receipt of my order. Thank you!
       `.trim();
 
       const encodedMessage = encodeURIComponent(message);
@@ -94,6 +118,7 @@ Total: Rs. ${cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0
       setIsCartOpen(false);
     } catch (error) {
       console.error('Checkout error:', error);
+      alert('Failed to process order. Please try again.');
     }
   };
 

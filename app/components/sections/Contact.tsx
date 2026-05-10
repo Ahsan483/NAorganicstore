@@ -28,11 +28,24 @@ export default function Contact({ onWhatsAppClick }: ContactProps) {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Simulate form submission
-      console.log('Form submitted:', formData);
-      // In a real app, you would send this to your backend
-      alert(`Thank you! We'll get back to you soon.`);
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(`Error: ${data.error}`);
+        return;
+      }
+
+      alert('Thank you! We\'ve received your message and will get back to you soon.');
       setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Form submission error:', error);
+      alert('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

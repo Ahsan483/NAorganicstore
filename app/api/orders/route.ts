@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sendOrderConfirmationEmail } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,34 +22,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Integrate with your backend
-    // - Save order to database
-    // - Send email notification
-    // - Send SMS/WhatsApp message
-    // - Process payment if applicable
-
     const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
-    console.log('New Order:', {
-      orderId,
-      customerInfo,
+    // Send confirmation email
+    await sendOrderConfirmationEmail({
+      customerEmail: customerInfo.email,
+      customerName: customerInfo.name || 'Customer',
+      customerPhone: customerInfo.phone,
+      customerLocation: customerInfo.location || 'Not specified',
       items,
       total,
-      timestamp: new Date().toISOString(),
+      orderId,
     });
 
     return NextResponse.json(
       {
         success: true,
         orderId,
-        message: 'Order received successfully',
+        message: 'Order received successfully! Check your email for confirmation.',
       },
       { status: 201 }
     );
   } catch (error) {
     console.error('Order API error:', error);
     return NextResponse.json(
-      { error: 'Failed to process order' },
+      { error: 'Failed to process order. Please try again.' },
       { status: 500 }
     );
   }
