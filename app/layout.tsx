@@ -13,14 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'NA Organic Store | 100% Natural Beauty & Wellness Products',
-  description: 'Discover NA Organic Store - your trusted source for 100% organic, chemical-free beauty and wellness products. Premium herbal shampoos, oils, creams, and serums for natural health.',
-  keywords: 'organic products, natural beauty, herbal remedies, organic hair care, cruelty-free, chemical-free, natural wellness',
+  title: 'NA Organic Store - 100% Organic Beauty & Wellness',
+  description: 'NA Organic Store - Premium 100% organic, herbal beauty and wellness products. Natural shampoos, oils, creams, and serums.',
+  keywords: 'organic products, natural beauty, herbal remedies, organic hair care, cruelty-free, chemical-free',
   authors: [{ name: 'NA Organic Store', url: 'https://naorganicstore.com' }],
   metadataBase: new URL('https://naorganicstore.com'),
   icons: {
-    icon: '/images/na-store-logo.png',
+    icon: [
+      { url: '/images/na-store-logo.png', type: 'image/png' },
+    ],
     apple: '/images/na-store-logo.png',
+    shortcut: '/images/na-store-logo.png',
   },
   openGraph: {
     title: 'NA Organic Store | 100% Natural Beauty & Wellness',
