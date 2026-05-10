@@ -66,10 +66,14 @@ export default function ProductCard({
         className="relative w-full h-64 bg-gray-100 overflow-hidden cursor-pointer"
         onClick={() => onImageClick?.(0)}
       >
-        <img
+        <Image
           src={image}
           alt={title}
+          fill
+          priority={false}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+          quality={85}
         />
         {discount > 0 && (
           <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform group-hover:scale-110 transition duration-300">

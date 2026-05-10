@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 export default function ProductShowcase() {
   return (
     <section className="py-20 bg-white overflow-hidden">
@@ -17,10 +19,14 @@ export default function ProductShowcase() {
         {/* Showcase Image */}
         <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-200/50 animate-fade-in-up">
           <div className="bg-gray-100 aspect-video sm:aspect-auto relative">
-            <img
+            <Image
               src="/images/products/all-products.png"
               alt="NA Organic Store - Complete Product Collection"
-              className="w-full h-full object-cover hover:scale-105 transition duration-500 cursor-pointer"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 85vw"
+              className="object-cover hover:scale-105 transition duration-500 cursor-pointer"
+              quality={85}
             />
           </div>
 

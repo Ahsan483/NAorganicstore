@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -58,10 +59,14 @@ export default function ProductLightbox({
 
       {/* Main Image */}
       <div className="relative w-full max-w-4xl h-[70vh] flex items-center justify-center">
-        <img
+        <Image
           src={images[index]}
           alt={`${productName} - Image ${index + 1}`}
-          className="max-w-full max-h-full object-contain"
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
+          className="object-contain"
+          quality={90}
         />
 
         {/* Navigation Arrows */}
@@ -97,16 +102,19 @@ export default function ProductLightbox({
             <button
               key={idx}
               onClick={() => setIndex(idx)}
-              className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition ${
+              className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 transition flex-shrink-0 ${
                 idx === index
                   ? 'border-green-400 opacity-100'
                   : 'border-white/20 opacity-50 hover:opacity-75'
               }`}
             >
-              <img
+              <Image
                 src={img}
                 alt={`Thumbnail ${idx + 1}`}
-                className="w-full h-full object-cover"
+                fill
+                sizes="64px"
+                className="object-cover"
+                quality={75}
               />
             </button>
           ))}
