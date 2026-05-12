@@ -63,7 +63,7 @@ export default function ProductCard({
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col border border-gray-200/50 hover:-translate-y-3 animate-scale-in group">
       {/* Image Container */}
       <div
-        className="relative w-full bg-gray-50 overflow-hidden cursor-pointer flex items-center justify-center"
+        className="relative w-full bg-gray-50 overflow-hidden cursor-pointer"
         onClick={() => onImageClick?.(0)}
         style={{ aspectRatio: '1/1' }}
       >
@@ -73,7 +73,7 @@ export default function ProductCard({
           fill
           priority={false}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-contain p-4 group-hover:scale-105 transition duration-500"
+          className="object-cover group-hover:scale-105 transition duration-500"
           quality={85}
         />
         {discount > 0 && (
