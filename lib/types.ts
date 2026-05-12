@@ -1,7 +1,9 @@
 export interface Product {
   id: string;
   title: string;
+  urduTitle?: string;
   description: string;
+  urduDescription?: string;
   image: string;
   images?: string[];
   price: number;

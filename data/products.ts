@@ -64,7 +64,9 @@ export const products: Product[] = [
   {
     id: '7',
     title: 'Safof Hazma',
+    urduTitle: 'سفوفِ ہاضمہ',
     description: 'A natural herbal digestive powder made with traditional ingredients to support healthy digestion, reduce stomach discomfort, and improve appetite. Prepared from pure herbs for daily wellness and digestive care.',
+    urduDescription: 'ایک قدرتی جڑی بوٹیوں سے بنا ہوا ہاضمے کو درست رکھنے والا پاؤڈر جو روایتی اجزاء سے تیار کیا گیا ہے۔ یہ صحت مند ہاضمے کو سپورٹ کرتا ہے، پیٹ کی تکلیف کو کم کرتا ہے اور بھوک میں اضافہ کرتا ہے۔ خالص جڑی بوٹیوں سے روز مرہ کی صحت اور ہاضمے کی دیکھ بھال کے لیے تیار۔',
     image: '/images/products/herbal-powder-1-bg.png',
     images: ['/images/products/herbal-powder-1-bg.png'],
     price: 450,
@@ -76,7 +78,9 @@ export const products: Product[] = [
   {
     id: '8',
     title: 'Sugar Control Powder',
+    urduTitle: 'شوگر کنٹرول',
     description: 'A herbal wellness powder specially prepared with natural ingredients to help support healthy sugar balance and overall well-being. Made from pure traditional herbs for daily use and natural health support.',
+    urduDescription: 'ایک جڑی بوٹیوں سے بنا ہوا صحت کا پاؤڈر جو قدرتی اجزاء سے خصوصی طور پر تیار کیا گیا ہے۔ یہ صحت مند شوگر کے توازن کو برقرار رکھنے میں مدد دیتا ہے اور مکمل صحت کی فلاح و بہبود کے لیے تیار۔ خالص روایتی جڑی بوٹیوں سے روز مرہ کے استعمال اور قدرتی صحت کی سپورٹ کے لیے۔',
     image: '/images/products/herbal-powder-2-bg.png',
     images: ['/images/products/herbal-powder-2-bg.png'],
     price: 450,
