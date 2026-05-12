@@ -14,18 +14,6 @@ export const products: Product[] = [
     reviews: 124,
   },
   {
-    id: '2',
-    title: 'Herbal Shampoo',
-    description: 'Gentle yet effective herbal formula suitable for all hair types. Contains organic herbs and plant extracts for natural cleansing.',
-    image: '/images/products/shampoo-bg.png',
-    images: ['/images/products/shampoo-bg.png'],
-    price: 450,
-    originalPrice: 600,
-    category: 'Shampoos',
-    rating: 4.6,
-    reviews: 89,
-  },
-  {
     id: '3',
     title: 'Beauty Cream',
     description: 'Natural brightening cream for melasma, freckles, and wrinkles. Infused with plant extracts for radiant skin.',
