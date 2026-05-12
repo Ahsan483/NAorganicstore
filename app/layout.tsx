@@ -20,11 +20,15 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://naorganicstore.com'),
   icons: {
     icon: [
+      { url: '/favicon.png', type: 'image/png', sizes: '512x512' },
       { url: '/favicon.ico', sizes: 'any' },
-      { url: '/images/na-store-logo.png', type: 'image/png' },
+      { url: '/images/na-store-logo.png', type: 'image/png', sizes: '500x500' },
     ],
-    apple: '/images/na-store-logo.png',
-    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/favicon.png', sizes: '512x512' },
+      { url: '/images/na-store-logo.png', sizes: '500x500' },
+    ],
+    shortcut: '/favicon.png',
   },
   openGraph: {
     title: 'NA Organic Store | 100% Natural Beauty & Wellness',
