@@ -24,7 +24,6 @@ export default function Navbar({ cartCount, onCartClick }: NavbarProps) {
 
   const navLinks = [
     { href: '#home', label: 'Home' },
-    { href: '#videos', label: 'Videos' },
     { href: '#products', label: 'Products' },
     { href: '#about', label: 'About' },
     { href: '#contact', label: 'Contact' },
