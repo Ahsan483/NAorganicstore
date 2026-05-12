@@ -64,7 +64,7 @@ export const products: Product[] = [
   {
     id: '7',
     title: 'Safof Hazma',
-    description: 'Premium herbal powder blend. Natural ingredients for skin and hair health. 100% organic.',
+    description: 'A natural herbal digestive powder made with traditional ingredients to support healthy digestion, reduce stomach discomfort, and improve appetite. Prepared from pure herbs for daily wellness and digestive care.',
     image: '/images/products/herbal-powder-1-bg.png',
     images: ['/images/products/herbal-powder-1-bg.png'],
     price: 450,
@@ -76,7 +76,7 @@ export const products: Product[] = [
   {
     id: '8',
     title: 'Sugar Control Powder',
-    description: 'Traditional herbal powder formula. Supports natural beauty and wellness. Pure and effective.',
+    description: 'A herbal wellness powder specially prepared with natural ingredients to help support healthy sugar balance and overall well-being. Made from pure traditional herbs for daily use and natural health support.',
     image: '/images/products/herbal-powder-2-bg.png',
     images: ['/images/products/herbal-powder-2-bg.png'],
     price: 450,
