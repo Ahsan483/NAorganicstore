@@ -54,7 +54,7 @@ export default function Navbar({ cartCount, onCartClick }: NavbarProps) {
             <span className={`text-xl font-black hidden sm:inline transition-all duration-300 ${
               isScrolled ? 'text-gray-900' : 'text-white'
             }`}>
-              NA Organic
+              NA Organic Store
             </span>
           </Link>
 
