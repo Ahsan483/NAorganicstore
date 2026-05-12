@@ -50,7 +50,7 @@ export default function Home() {
 
   const handleWhatsApp = (product: { name: string; price: number }) => {
     const message = `Hello! I'm interested in *${product.name}* priced at Rs.${product.price}`;
-    const phoneNumber = '+923291945009';
+    const phoneNumber = '+923489374748';
     const encodedMessage = encodeURIComponent(message);
     window.open(
       `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
@@ -108,7 +108,7 @@ Please confirm receipt of my order. Thank you!
       `.trim();
 
       const encodedMessage = encodeURIComponent(message);
-      const phoneNumber = '+923291945009';
+      const phoneNumber = '+923489374748';
       window.open(
         `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
         '_blank'

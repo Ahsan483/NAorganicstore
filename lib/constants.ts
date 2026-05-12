@@ -1,4 +1,4 @@
-export const WHATSAPP_NUMBER = '+923291945009';
+export const WHATSAPP_NUMBER = '+923489374748';
 
 export const CONTACT_INFO = {
   email: 'hakeemaziz8320@gmail.com',

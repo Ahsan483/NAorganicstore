@@ -307,7 +307,7 @@ export async function sendOrderConfirmationEmail(data: {
             </p>
             <p style="color: #666;">
               📞 <a href="tel:+923028337026" style="color: #16a34a; text-decoration: none;">+92 302 833 7026</a><br>
-              💬 <a href="https://wa.me/923291945009" style="color: #16a34a; text-decoration: none;">WhatsApp</a>
+              💬 <a href="https://wa.me/923489374748" style="color: #16a34a; text-decoration: none;">WhatsApp</a>
             </p>
           </div>
           ${getFooter()}
