@@ -25,7 +25,7 @@ export default function ProductShowcase() {
               fill
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 85vw"
-              className="object-contain hover:scale-105 transition duration-500 cursor-pointer"
+              className="object-cover hover:scale-105 transition duration-500 cursor-pointer"
               quality={85}
             />
           </div>
