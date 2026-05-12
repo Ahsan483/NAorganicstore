@@ -340,3 +340,121 @@ export async function sendOrderConfirmationEmail(data: {
     throw error;
   }
 }
+
+export async function sendAdminOrderNotification(data: {
+  customerName: string;
+  customerPhone: string;
+  customerEmail?: string;
+  customerLocation: string;
+  items: Array<{ name: string; price: number; quantity: number }>;
+  total: number;
+  orderId: string;
+}) {
+  try {
+    const itemsHtml = data.items
+      .map(
+        (item, index) =>
+          `<tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 12px; text-align: left;">${item.name}</td>
+            <td style="padding: 12px; text-align: center; color: #666;">x${item.quantity}</td>
+            <td style="padding: 12px; text-align: right; font-weight: 600; color: #16a34a;">Rs. ${(item.price * item.quantity).toLocaleString()}</td>
+          </tr>`
+      )
+      .join('');
+
+    const adminHtml = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; background: #f9f9f9; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: white; padding: 40px 20px; text-align: center;">
+            <h1 style="margin: 0; font-size: 32px; font-weight: bold;">🎉 NEW ORDER RECEIVED</h1>
+            <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">NA Organic Store Order Management</p>
+          </div>
+
+          <div style="padding: 40px 20px; background: white;">
+            <h2 style="color: #16a34a; margin-top: 0;">⚠️ NEW ORDER ALERT</h2>
+
+            <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 4px; margin: 20px 0;">
+              <p style="margin: 0; font-weight: 600; color: #92400e;">Order ID: <strong style="font-size: 16px;">${data.orderId}</strong></p>
+              <p style="margin: 5px 0 0 0; color: #92400e;">Time: ${new Date().toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })}</p>
+            </div>
+
+            <h3 style="color: #333; margin: 25px 0 15px 0; border-bottom: 2px solid #16a34a; padding-bottom: 10px;">👤 CUSTOMER DETAILS</h3>
+            <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="margin: 8px 0;"><strong>Name:</strong> ${data.customerName}</p>
+              <p style="margin: 8px 0;"><strong>Phone:</strong> <a href="https://wa.me/${data.customerPhone.replace(/[^\d+]/g, '')}" style="color: #16a34a; text-decoration: none;">📱 ${data.customerPhone}</a> (Click to open WhatsApp)</p>
+              <p style="margin: 8px 0;"><strong>Email:</strong> <a href="mailto:${data.customerEmail}" style="color: #16a34a; text-decoration: none;">${data.customerEmail || 'Not provided'}</a></p>
+              <p style="margin: 8px 0;"><strong>Location:</strong> ${data.customerLocation}</p>
+            </div>
+
+            <h3 style="color: #333; margin: 25px 0 15px 0; border-bottom: 2px solid #16a34a; padding-bottom: 10px;">📦 ORDER ITEMS</h3>
+            <table style="width: 100%; border-collapse: collapse; background: white;">
+              <thead>
+                <tr style="background: #f0fdf4; border-bottom: 2px solid #16a34a;">
+                  <th style="padding: 12px; text-align: left; color: #16a34a; font-weight: 600;">Product</th>
+                  <th style="padding: 12px; text-align: center; color: #16a34a; font-weight: 600;">Qty</th>
+                  <th style="padding: 12px; text-align: right; color: #16a34a; font-weight: 600;">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemsHtml}
+              </tbody>
+            </table>
+
+            <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: right;">
+              <p style="margin: 0; font-size: 18px; color: #16a34a;"><strong>💰 Total: Rs. ${data.total.toLocaleString()}</strong></p>
+            </div>
+
+            <div style="background: #ecfdf5; border-left: 4px solid #10b981; padding: 15px; border-radius: 4px; margin: 20px 0;">
+              <h4 style="margin-top: 0; color: #047857;">⏰ NEXT STEPS:</h4>
+              <ol style="margin: 10px 0; padding-left: 20px; color: #047857;">
+                <li>📞 Contact customer via WhatsApp (click phone number above)</li>
+                <li>✅ Confirm delivery address and details</li>
+                <li>💳 Discuss payment method (Cash on Delivery, Transfer, etc.)</li>
+                <li>📮 Prepare order and arrange delivery</li>
+              </ol>
+            </div>
+
+            <p style="color: #666; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px;">
+              This is an automated notification from your NA Organic Store ordering system. Contact customer promptly to ensure satisfaction.
+            </p>
+          </div>
+
+          <div style="background: #f5f5f5; padding: 20px; text-align: center; border-top: 1px solid #ddd;">
+            <p style="margin: 10px 0; font-size: 12px; color: #999;">
+              © 2024 NA Organic Store. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    // Send email to admin
+    await transporter.sendMail({
+      from: process.env.EMAIL_FROM,
+      to: process.env.EMAIL_TO_ADMIN,
+      subject: `🎉 NEW ORDER ${data.orderId} - Rs.${data.total} | ${data.customerName}`,
+      html: adminHtml,
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error('Admin notification error:', error);
+    throw error;
+  }
+}

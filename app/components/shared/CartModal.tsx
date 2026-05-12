@@ -56,12 +56,15 @@ export default function CartModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+      <div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/20">
         {/* Header */}
-        <div className="sticky top-0 bg-green-700 text-white p-6 flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Your Cart</h2>
-          <button onClick={onClose} className="p-1 hover:bg-green-800 rounded">
+        <div className="sticky top-0 bg-gradient-to-r from-green-700 to-green-600 text-white p-6 flex justify-between items-center rounded-t-2xl">
+          <div>
+            <h2 className="text-2xl font-black">Shopping Cart</h2>
+            <p className="text-green-100 text-sm mt-1">{items.length} items in cart</p>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-green-800 rounded-full transition">
             <X size={24} />
           </button>
         </div>
@@ -72,11 +75,11 @@ export default function CartModal({
           ) : (
             <>
               {/* Cart Items */}
-              <div className="space-y-4 mb-6">
+              <div className="space-y-3 mb-6">
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg"
+                    className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-green-50 rounded-xl border border-green-100/50 hover:border-green-200 transition"
                   >
                     <div className="flex-grow">
                       <h3 className="font-semibold text-gray-900">{item.name}</h3>
@@ -134,53 +137,55 @@ export default function CartModal({
               </div>
 
               {/* Customer Info Form */}
-              <div className="bg-gray-50 p-4 rounded-lg mb-6 space-y-4">
-                <h3 className="font-semibold text-gray-900">Delivery Information</h3>
+              <div className="bg-gradient-to-br from-green-50 to-blue-50 p-6 rounded-xl mb-6 space-y-4 border border-green-100">
+                <h3 className="font-bold text-lg text-gray-900 flex items-center gap-2">
+                  <span className="text-green-700">📦</span> Delivery Information
+                </h3>
                 <input
                   type="text"
-                  placeholder="Your Name"
+                  placeholder="Your Full Name"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
+                  className="w-full px-4 py-3 border border-green-200 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-700 focus:border-transparent transition"
                 />
                 <input
                   type="email"
                   placeholder="Email Address (for order confirmation)"
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
+                  className="w-full px-4 py-3 border border-green-200 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-700 focus:border-transparent transition"
                 />
                 <input
                   type="tel"
-                  placeholder="Phone Number (required)"
+                  placeholder="Phone Number (required) - +92..."
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
+                  className="w-full px-4 py-3 border border-red-200 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent transition"
                 />
                 <input
                   type="text"
-                  placeholder="Delivery Location"
+                  placeholder="Delivery Location / City"
                   value={customerLocation}
                   onChange={(e) => setCustomerLocation(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
+                  className="w-full px-4 py-3 border border-green-200 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-700 focus:border-transparent transition"
                 />
               </div>
 
               {/* Action Buttons */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-green-100">
                 <button
                   onClick={onClose}
-                  className="px-6 py-2 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition"
+                  className="px-6 py-3 border-2 border-gray-300 rounded-xl font-bold text-gray-700 hover:border-gray-400 hover:bg-gray-50 transition transform hover:scale-105"
                 >
                   Continue Shopping
                 </button>
                 <button
                   onClick={handleCheckout}
                   disabled={isSubmitting}
-                  className="px-6 py-2 bg-green-700 hover:bg-green-800 text-white rounded-lg font-semibold transition disabled:opacity-50"
+                  className="px-6 py-3 bg-gradient-to-r from-green-700 to-green-600 hover:from-green-600 hover:to-green-500 text-white rounded-xl font-bold transition disabled:opacity-50 transform hover:scale-105 disabled:hover:scale-100 shadow-lg"
                 >
-                  {isSubmitting ? 'Processing...' : 'Place Order'}
+                  {isSubmitting ? '⏳ Processing...' : '✓ Place Order'}
                 </button>
               </div>
             </>

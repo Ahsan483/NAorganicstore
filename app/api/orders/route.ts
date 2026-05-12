@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sendOrderConfirmationEmail } from '@/lib/email';
+import { sendOrderConfirmationEmail, sendAdminOrderNotification } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,22 +24,41 @@ export async function POST(request: NextRequest) {
 
     const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
-    // Send confirmation email
-    await sendOrderConfirmationEmail({
-      customerEmail: customerInfo.email,
-      customerName: customerInfo.name || 'Customer',
-      customerPhone: customerInfo.phone,
-      customerLocation: customerInfo.location || 'Not specified',
-      items,
-      total,
-      orderId,
-    });
+    try {
+      // Send confirmation email to customer
+      await sendOrderConfirmationEmail({
+        customerEmail: customerInfo.email,
+        customerName: customerInfo.name || 'Customer',
+        customerPhone: customerInfo.phone,
+        customerLocation: customerInfo.location || 'Not specified',
+        items,
+        total,
+        orderId,
+      });
+    } catch (emailError) {
+      console.error('Customer email error:', emailError);
+    }
+
+    try {
+      // Send admin notification
+      await sendAdminOrderNotification({
+        customerName: customerInfo.name || 'Unknown',
+        customerPhone: customerInfo.phone,
+        customerEmail: customerInfo.email,
+        customerLocation: customerInfo.location || 'Not specified',
+        items,
+        total,
+        orderId,
+      });
+    } catch (adminError) {
+      console.error('Admin email error:', adminError);
+    }
 
     return NextResponse.json(
       {
         success: true,
         orderId,
-        message: 'Order received successfully! Check your email for confirmation.',
+        message: '✅ Order placed successfully! Confirmation email sent. Our team will contact you shortly via WhatsApp.',
       },
       { status: 201 }
     );
