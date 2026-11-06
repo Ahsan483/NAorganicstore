@@ -70,3 +70,5 @@ app/api/…         REST endpoints          app/components/…  UI + motion prim
 lib/db.ts         libSQL + schema         lib/orders.ts     order logic & stats
 lib/notify.ts     email + WhatsApp        lib/auth.ts       sessions   lib/security.ts  hashing/rate-limit
 ```
+
+<!-- Redeploy: rebuild with DATABASE_URL set on Vercel -->
