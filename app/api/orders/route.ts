@@ -1,79 +1,46 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { sendOrderConfirmationEmail, sendAdminOrderNotification } from '@/lib/email';
+import { NextRequest } from 'next/server';
+import { orderSchema } from '@/lib/validation';
+import { createOrder, OrderError } from '@/lib/orders';
+import { notifyNewOrder, customerWhatsappLink } from '@/lib/notify';
+import { clean, clientIp, rateLimit, tooMany } from '@/lib/security';
 
-export async function POST(request: NextRequest) {
+export const maxDuration = 30;
+
+export async function POST(req: NextRequest) {
+  const ip = clientIp(req);
   try {
-    const body = await request.json();
-    const { customerInfo, items, total } = body;
+    const rl = await rateLimit(`order:${ip}`, 8, 3600);
+    if (!rl.ok) return tooMany(rl.retryAfter);
 
-    // Validate request
-    if (!customerInfo || !items || !total) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
+    const parsed = orderSchema.safeParse(await req.json().catch(() => null));
+    if (!parsed.success) {
+      return Response.json({ error: parsed.error.issues[0]?.message ?? 'Invalid order' }, { status: 400 });
     }
+    const d = parsed.data;
+    if (d.website) return Response.json({ success: true, orderId: 'NA-OK' }); // honeypot: pretend success
 
-    // Validate phone number
-    if (!customerInfo.phone || customerInfo.phone.trim().length < 10) {
-      return NextResponse.json(
-        { error: 'Invalid phone number' },
-        { status: 400 }
-      );
-    }
+    const order = await createOrder({
+      customerName: clean(d.customerName, 80),
+      phone: d.phone,
+      email: d.email ? clean(d.email, 120) : undefined,
+      address: clean(d.address, 300),
+      city: clean(d.city, 60),
+      notes: d.notes ? clean(d.notes, 500) : undefined,
+      paymentMethod: d.paymentMethod,
+      items: d.items,
+      ip,
+    });
 
-    const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    // Fire email + WhatsApp alerts (awaited so serverless doesn't freeze them; result stored on the order)
+    const notifications = await notifyNewOrder(order);
 
-    try {
-      // Send confirmation email to customer
-      await sendOrderConfirmationEmail({
-        customerEmail: customerInfo.email,
-        customerName: customerInfo.name || 'Customer',
-        customerPhone: customerInfo.phone,
-        customerLocation: customerInfo.location || 'Not specified',
-        items,
-        total,
-        orderId,
-      });
-    } catch (emailError) {
-      console.error('Customer email error:', emailError);
-    }
-
-    try {
-      // Send admin notification
-      await sendAdminOrderNotification({
-        customerName: customerInfo.name || 'Unknown',
-        customerPhone: customerInfo.phone,
-        customerEmail: customerInfo.email,
-        customerLocation: customerInfo.location || 'Not specified',
-        items,
-        total,
-        orderId,
-      });
-    } catch (adminError) {
-      console.error('Admin email error:', adminError);
-    }
-
-    return NextResponse.json(
-      {
-        success: true,
-        orderId,
-        message: '✅ Order placed successfully! Confirmation email sent. Our team will contact you shortly via WhatsApp.',
-      },
-      { status: 201 }
+    return Response.json(
+      { success: true, orderId: order.id, total: order.total, whatsappLink: customerWhatsappLink(order), notified: notifications },
+      { status: 201 },
     );
-  } catch (error) {
-    console.error('Order API error:', error);
-    return NextResponse.json(
-      { error: 'Failed to process order. Please try again.' },
-      { status: 500 }
-    );
+  } catch (e) {
+    if (e instanceof OrderError) return Response.json({ error: e.message }, { status: 400 });
+    console.error('[orders] failed', e);
+    return Response.json({ error: 'We could not place your order. Please try again or contact us on WhatsApp.' }, { status: 500 });
   }
-}
-
-export async function GET() {
-  return NextResponse.json(
-    { message: 'Order API endpoint' },
-    { status: 200 }
-  );
 }
